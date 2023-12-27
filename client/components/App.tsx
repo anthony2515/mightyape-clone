@@ -34,7 +34,8 @@ function App() {
     <IfAuthenticated>
           <button onClick={handleSignOut}>Sign out</button>
           {<p>Hello {user?.name}</p>}
-          <Link className="adminButton" to = "/admin">Admin</Link>
+          {user?.email=="santiagoanthony114@gmail.com"?(<Link className="adminButton" to = "/admin">Admin</Link>):null}
+          
         </IfAuthenticated>
         <IfNotAuthenticated>
           <button onClick={handleSignIn}>Sign in</button>
