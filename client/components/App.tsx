@@ -3,7 +3,24 @@ import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import AdminForm from "./AdminForm"
 import {Link} from 'react-router-dom'
+import { useAuth0 } from "@auth0/auth0-react"
+import { IfAuthenticated, IfNotAuthenticated } from "./Authenticated"
 function App() {
+  const {logout,loginWithRedirect,user} = useAuth0()
+  // const user = {
+  //   nickname: 'john.doe',
+  // }
+  console.log(user)
+  const handleSignOut = () => {
+    console.log('sign out')
+    return logout()
+  }
+
+  const handleSignIn = () => {
+    console.log('sign in')
+    return loginWithRedirect()
+  }
+
   const {data:products,isLoading,error} = useQuery({queryKey:['products'],queryFn:getAllProductsAPI})
   if (error) {
     return <p>This is an Error</p>
@@ -11,11 +28,20 @@ function App() {
   if (!products || isLoading) {
     return <p>Internal Server Error</p>
   }
+  
   return (
     <>
+    <IfAuthenticated>
+          <button onClick={handleSignOut}>Sign out</button>
+          {<p>Hello {user?.name}</p>}
+          <Link className="adminButton" to = "/admin">Admin</Link>
+        </IfAuthenticated>
+        <IfNotAuthenticated>
+          <button onClick={handleSignIn}>Sign in</button>
+        </IfNotAuthenticated>
       <header className="header">
         <h1 className = "title">Ton's Grocery</h1>
-        <Link className="adminButton" to = "/admin">Admin</Link>
+        
       </header>
       <section className="main">{products.map((data)=>{
         return(
