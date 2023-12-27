@@ -19,7 +19,7 @@ img{
   padding-left:50px;
   padding-right:50px;
   padding-bottom:50px;
- 
+  
 }
 .product_container{
  
@@ -88,4 +88,8 @@ form{
 .adminButton:active{
   height:35px;
   width:105px;
+}
+.adminButtonContainer{
+  display:flex;
+  justify-content: flex-end;
 }

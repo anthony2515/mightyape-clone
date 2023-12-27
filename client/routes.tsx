@@ -11,7 +11,7 @@ export const routes = createRoutesFromElements(
   // </Route>
   <>
     <Route path = "/" element={<App />}/>
-  <Route path="/admin" element={<AdminForm />} />
+  <Route path="/addProduct" element={<AdminForm />} />
   </>
 
 
