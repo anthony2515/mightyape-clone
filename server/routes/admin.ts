@@ -1,5 +1,5 @@
 import express from 'express'
-import { insertProducts ,deleteProduct} from '../db/db.ts'
+import { insertProducts ,deleteProduct,displayProduct} from '../db/db.ts'
 import multer from 'multer'
 // import { Path } from 'react-router-dom'
 const router = express.Router()
@@ -48,6 +48,15 @@ router.delete('/:id',async(req,res)=>{
     res.status(500).send("deletion failed")
   }
   
+})
+router.get('/:id',async(req,res)=>{
+  try{
+    const id = Number(req.params.id)
+    const response = await displayProduct(id)
+    res.json(response)
+  }catch(error){
+    res.status(500).send("Cannot get product")
+  }
 })
 export default router
 

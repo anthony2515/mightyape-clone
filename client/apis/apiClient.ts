@@ -8,7 +8,7 @@ export async function getAllProductsAPI(){
     return response.body
   }
   catch(e){
-    console.error(e.message)
+    console.log(e.message)
   }
   
 }

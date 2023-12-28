@@ -1,10 +1,16 @@
 import connection from './connection'
 import { NewProducts } from '../../models/newProducts'
-
+//display all products
 export function displayProducts() {
   return connection('products').select()
 }
 
+//display single product base on product_id
+export function displayProduct(id:number){
+  return connection('products')
+  .select()
+  .where('product_id',id)
+}
 export function insertProducts(result: NewProducts) {
   // const filePath = picture;
   console.log('database', result)
