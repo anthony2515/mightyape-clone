@@ -13,6 +13,7 @@ function AdminForm(){
   const [fileData,setFileData] = useState({product_image:''})
   const queryClient = useQueryClient()
   const navigate = useNavigate()
+  
   const addProductMutation = useMutation({
     mutationFn:addProducts,
     onSuccess:async()=>{

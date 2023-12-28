@@ -1,7 +1,6 @@
 import { getAllProductsAPI } from '../apis/apiClient'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
-import AdminForm from './AdminForm'
 import { Link } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import { IfAuthenticated, IfNotAuthenticated } from './Authenticated'
@@ -15,6 +14,11 @@ function App() {
   const handleSignIn = () => {
     return loginWithRedirect()
   }
+   //handle buttons from admin
+  
+  const handleEdit = () => {
+    console.log("edit")
+  }
   //Display Products from server
   const {
     data: products,
@@ -27,13 +31,7 @@ function App() {
   if (!products || isLoading) {
     return <p>Internal Server Error</p>
   }
-  //handle buttons from admin
-  const handleDelete = ()=>{
-    console.log("delete")
-  }
-  const handleEdit = ()=>{
-    console.log("edit")
-  }
+ 
   return (
     <>
       <IfAuthenticated>
@@ -60,9 +58,13 @@ function App() {
                 {user?.email == 'santiagoanthony114@gmail.com' ? (
                   <div className="adminButtonContainer">
                     <button onClick = {handleEdit}>Edit</button>
-                    <button onClick = {handleDelete}>Delete</button>
+                    <button onClick = {()=>{
+                      console.log("delete button")
+                    }}>Delete</button>
                   </div>
-                ) : null}
+                ) : <div className = "userButtonContainer">
+                    <button> Buy </button>                  
+                  </div>}
               </IfAuthenticated>
               <div className="product_image">
                 <img src={data.product_image} alt="" />
