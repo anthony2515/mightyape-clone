@@ -66,11 +66,11 @@ function App() {
                 {user?.email == 'santiagoanthony114@gmail.com' ? (
                   <div className="adminButtonContainer">
                     <button onClick = { () => {
-                      console.log("edit")
+                    
                       navigate(`/editProduct/${data.product_id}`)
                     }}>Edit</button>
                     <button onClick = {()=>{
-                      console.log("delete button",data.product_id)
+                   
                       deleteProductMutation.mutate(data.product_id)
                     }}>Delete</button>
                   </div>

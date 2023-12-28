@@ -53,6 +53,7 @@ router.get('/:id',async(req,res)=>{
   try{
     const id = Number(req.params.id)
     const response = await displayProduct(id)
+    
     res.json(response)
   }catch(error){
     res.status(500).send("Cannot get product")

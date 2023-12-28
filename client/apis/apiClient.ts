@@ -1,5 +1,5 @@
 import request from "superagent";
-import { NewProducts } from "../../models/newProducts";
+import { DisplayProducts, NewProducts } from "../../models/newProducts";
 
 const route = '/api/v1/products'
 export async function getAllProductsAPI(){
@@ -28,5 +28,14 @@ export async function deleteProduct(id:number){
   }catch(e){
     throw new Error(`An error occurred while deleting product`)
 
+  }
+}
+export async function getProduct(id:number){
+  try{
+    const response = await request.get(`${adminRoute}/${id}`)
+    
+    return response.body
+  }catch(e){
+    throw new Error(`An error occurred while deleting product`)
   }
 }

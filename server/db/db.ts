@@ -8,7 +8,7 @@ export function displayProducts() {
 //display single product base on product_id
 export function displayProduct(id:number){
   return connection('products')
-  .select()
+  .select('*')
   .where('product_id',id)
 }
 export function insertProducts(result: NewProducts) {
