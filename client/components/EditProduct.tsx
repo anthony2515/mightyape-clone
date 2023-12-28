@@ -24,8 +24,12 @@ export default function EditProduct(){
     <div className = "editComponent">
       {/* I didn't use product.map as it only return 1 index */}
       <img src={`/${product[0].product_image}`} alt={product[0].product_image} />
-      <h1>{product[0].product_name}</h1>
-      <h2>{product[0].product_price}</h2>
+      <label htmlFor="productName">Product Name:</label>
+      <input type="text" id = "productName" value = {product[0].product_name} />
+      <label htmlFor="productPrice">Price:</label>
+      <input type="text" id = "productPrice" value = {product[0].product_price} />
+      {/* <h1>{product[0].product_name}</h1>
+      <h2>{product[0].product_price}</h2> */}
 
     </div>
   )
