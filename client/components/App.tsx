@@ -5,6 +5,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import { IfAuthenticated, IfNotAuthenticated } from './Authenticated'
 import {DisplayProducts} from '../../models/newProducts'
+
 function App() {
   //--Handle Authentication
   const { logout, loginWithRedirect, user } = useAuth0()
@@ -15,10 +16,8 @@ function App() {
     return loginWithRedirect()
   }
    //handle buttons from admin
-  
-  const handleEdit = () => {
-    console.log("edit")
-  }
+   const navigate = useNavigate()
+
   //Display Products from server
   const {
     data: products,
@@ -66,7 +65,10 @@ function App() {
               <IfAuthenticated>
                 {user?.email == 'santiagoanthony114@gmail.com' ? (
                   <div className="adminButtonContainer">
-                    <button onClick = {handleEdit}>Edit</button>
+                    <button onClick = { () => {
+                      console.log("edit")
+                      navigate(`/editProduct/${data.product_id}`)
+                    }}>Edit</button>
                     <button onClick = {()=>{
                       console.log("delete button",data.product_id)
                       deleteProductMutation.mutate(data.product_id)
