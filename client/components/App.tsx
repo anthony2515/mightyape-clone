@@ -1,7 +1,7 @@
-import { getAllProductsAPI } from '../apis/apiClient'
-import { useQuery } from '@tanstack/react-query'
+import { getAllProductsAPI,deleteProduct } from '../apis/apiClient'
+import { useQuery,useMutation,useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import { IfAuthenticated, IfNotAuthenticated } from './Authenticated'
 import {DisplayProducts} from '../../models/newProducts'
@@ -25,13 +25,22 @@ function App() {
     isLoading,
     error,
   } = useQuery({ queryKey: ['products'], queryFn: getAllProductsAPI })
+  //useMutation to delete product as admin
+  const queryClient = useQueryClient()
+  const deleteProductMutation = useMutation({
+    mutationFn:deleteProduct,
+    onSuccess:async()=>{
+      queryClient.invalidateQueries(['products'])
+    }
+  })
+
   if (error) {
     return <p>This is an Error</p>
   }
   if (!products || isLoading) {
     return <p>Internal Server Error</p>
   }
- 
+  
   return (
     <>
       <IfAuthenticated>
@@ -53,13 +62,14 @@ function App() {
         {/* Display products using map */}
         {products.map((data:DisplayProducts) => {
           return (
-            <div className="product_container" key={data.id}>
+            <div className="product_container" key={data.product_id}>
               <IfAuthenticated>
                 {user?.email == 'santiagoanthony114@gmail.com' ? (
                   <div className="adminButtonContainer">
                     <button onClick = {handleEdit}>Edit</button>
                     <button onClick = {()=>{
-                      console.log("delete button")
+                      console.log("delete button",data.product_id)
+                      deleteProductMutation.mutate(data.product_id)
                     }}>Delete</button>
                   </div>
                 ) : <div className = "userButtonContainer">

@@ -13,11 +13,20 @@ export async function getAllProductsAPI(){
   
 }
 const adminRoute = '/api/v1/admin'
-export async function addProducts(text){
+export async function addProducts(text:NewProducts){
   try{
     const response = await request.post(adminRoute).send(text)
     return response.body
   }catch(e){
     throw new Error(`An error occurred while adding product`)
+  }
+}
+export async function deleteProduct(id:number){
+  try{
+    const response = await request.delete(`${adminRoute}/${id}`)
+    return response.body
+  }catch(e){
+    throw new Error(`An error occurred while deleting product`)
+
   }
 }
