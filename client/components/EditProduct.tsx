@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams,useLocation } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import { getProduct } from "../apis/apiClient"
 export default function EditProduct(){
@@ -8,22 +8,25 @@ export default function EditProduct(){
     data: product,
     isLoading,
     error,
-  } = useQuery( 
-     ['editProduct'],
-     ()=>getProduct(Number(params.id))
-    )
-  
+  } = useQuery({queryKey:['product'],
+  queryFn:()=>getProduct(Number(params.id))
+})
+  console.log(product)
   if (error) {
-    return <p>This is an Error</p>
+    return <p>Internal Server Error</p>
   }
   if (!product || isLoading) {
-    return <p>Internal Server Error</p>
+    return <p>Loading....</p>
   }
   
 
   return(
     <div className = "editComponent">
-      <h1>Hi</h1>
+      {/* I didn't use product.map as it only return 1 index */}
+      <img src={`/${product[0].product_image}`} alt={product[0].product_image} />
+      <h1>{product[0].product_name}</h1>
+      <h2>{product[0].product_price}</h2>
+
     </div>
   )
 }

@@ -37,7 +37,7 @@ function App() {
     return <p>This is an Error</p>
   }
   if (!products || isLoading) {
-    return <p>Internal Server Error</p>
+    return <p>Loading....</p>
   }
   
   return (
