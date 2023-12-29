@@ -16,7 +16,10 @@
     "test": "vitest",
     "knex": "knex --knexfile ./server/db/knexfile.js",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "format": "prettier -w '**/*.{js,jsx,ts,tsx}'"
+    "format": "prettier -w '**/*.{js,jsx,ts,tsx}'",
+    "migrate": "knex migrate:latest",
+    "seed": "knex seed:run",
+    "deploy": "npm run migrate && vercel --prod"
   },
   "keywords": [
     "fullstack"
