@@ -1,11 +1,11 @@
 import { getAllProductsAPI,deleteProduct } from '../apis/apiClient'
 import { useQuery,useMutation,useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link,Outlet,useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import { IfAuthenticated, IfNotAuthenticated } from './Authenticated'
 import {DisplayProducts} from '../../models/newProducts'
-
+import DeletePoduct from './DeleteProduct'
 function App() {
   //--Handle Authentication
   const { logout, loginWithRedirect, user } = useAuth0()
@@ -17,6 +17,7 @@ function App() {
   }
    //handle buttons from admin
    const navigate = useNavigate()
+   const navigate2 = useNavigate()
 
   //Display Products from server
   const {
@@ -32,6 +33,16 @@ function App() {
       queryClient.invalidateQueries(['products'])
     }
   })
+  const [productToDelete, setProductToDelete] = useState(null);
+  const [getProductName,setGetProductName] = useState(null)
+
+  
+  //when delete button is clicked this function trigger
+  const handleDeleteButtonClick = (id:number,name:string) => {
+    
+    setGetProductName(name)
+    setProductToDelete(id)
+  };
 
   if (error) {
     return <p>This is an Error</p>
@@ -42,6 +53,20 @@ function App() {
   
   return (
     <>
+    {/* Displays a confirmation if user wants to delete a product */}
+    {productToDelete && (
+        <div className="modalContainer">
+          <p>Are you sure you want to delete {getProductName}?</p>
+          <button onClick={() => setProductToDelete(null)}>Cancel</button>
+          <button onClick={() => {
+            // Perform the delete action for the specific product
+            deleteProductMutation.mutate(productToDelete);
+            // Hide the confirmation modal
+            setProductToDelete(null);
+          }}>Confirm</button>
+        </div>
+      )}
+
       <IfAuthenticated>
         <button onClick={handleSignOut}>Sign out</button>
         {<p>Hello {user?.name}</p>}
@@ -65,14 +90,15 @@ function App() {
               <IfAuthenticated>
                 {user?.email == 'santiagoanthony114@gmail.com' ? (
                   <div className="adminButtonContainer">
-                    <button onClick = { () => {
+                    <button onClick = {() => {
                     
                       navigate(`/editProduct/${data.product_id}`)
                     }}>Edit</button>
+                    
                     <button onClick = {()=>{
-                   
-                      deleteProductMutation.mutate(data.product_id)
+                      handleDeleteButtonClick(data.product_id,data.product_name)
                     }}>Delete</button>
+                    
                   </div>
                 ) : <div className = "userButtonContainer">
                     <button> Buy </button>                  
@@ -86,11 +112,17 @@ function App() {
                 <p className="priceFont">{data.product_price}</p>
                 <span className="productNameFont">{data.product_name}</span>
               </div>
+              
             </div>
+            
           )
-        })}
+        })
+        
+        }
       </section>
+      
     </>
+    
   )
 }
 

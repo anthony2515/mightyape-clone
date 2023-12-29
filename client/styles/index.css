@@ -112,3 +112,17 @@ form{
   border:.5px solid rgb(210, 206, 206);
   border-radius: 5px;
 }
+.modalContainer{
+  background-color:white;
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  margin:auto;
+  border:1px solid black;
+  height:200px;
+  width:500px;
+  padding-top:50px;
+ text-align: center;
+}
