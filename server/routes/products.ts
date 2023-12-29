@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/',async(req,res)=>{
   try{
     const response = await displayProducts()
-  console.log("get",response)
+ 
   res.json(response)
   }catch(e){
     res.status(500).send("Borken")

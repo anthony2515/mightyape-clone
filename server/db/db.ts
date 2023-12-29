@@ -8,8 +8,17 @@ export function displayProducts() {
 //display single product base on product_id
 export function displayProduct(id:number){
   return connection('products')
-  .select('*')
+  .select()
   .where('product_id',id)
+
+}
+
+//retrieve file name info
+export function getFileNameById(id:number){
+  return connection('products')
+  .select('product_image')
+  .where('product_id',id)
+  
 }
 export function insertProducts(result: NewProducts) {
   // const filePath = picture;

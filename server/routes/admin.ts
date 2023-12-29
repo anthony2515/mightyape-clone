@@ -1,6 +1,8 @@
 import express from 'express'
-import { insertProducts ,deleteProduct,displayProduct} from '../db/db.ts'
+import { insertProducts ,deleteProduct,displayProduct, getFileNameById} from '../db/db.ts'
 import multer from 'multer'
+import path from 'path'
+import fs from 'fs'
 // import { Path } from 'react-router-dom'
 const router = express.Router()
 router.use(express.urlencoded({extended:true}))
@@ -42,8 +44,23 @@ router.post('/',upload.single('product_image'),async(req,res)=>{
 router.delete('/:id',async(req,res)=>{
   try{
     const id = Number(req.params.id)
-    const response = await deleteProduct(id)
-    res.json(response)
+    const filename = await getFileNameById(id)
+    if (filename[0].product_image) { // check if has uploaded image
+    const filePath = path.join('public', filename[0].product_image);
+    
+      // Delete the file from the filesystem
+       fs.unlink(filePath,(err)=>{ 
+        if(err) return console.log(err);
+        console.log('file deleted successfully');});
+        const response = await deleteProduct(id)
+        
+        res.json(response)
+    }
+    if(!filename[0].product_image){ //check if no uploaded image
+      const response = await deleteProduct(id)
+      res.json(response)
+    }
+    
   } catch(error){
     res.status(500).send("deletion failed")
   }
