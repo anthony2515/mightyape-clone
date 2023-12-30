@@ -1,0 +1,8 @@
+
+{
+  "functions": {
+    "server/routes/*.ts": {
+      "runtime": "nodejs14.x"
+    }
+  }
+}
