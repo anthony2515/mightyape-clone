@@ -6,8 +6,9 @@ const router = express.Router()
 //api/v1/products
 router.get('/',async(req,res)=>{
   try{
+    console.log('Request to /api/v1/products received');
     const response = await displayProducts()
- 
+    console.log('Sending response:', response);
   res.json(response)
   }catch(e){
     console.error("ERRRRROR",e)
