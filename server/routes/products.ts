@@ -10,6 +10,7 @@ router.get('/',async(req,res)=>{
  
   res.json(response)
   }catch(e){
+    console.error("ERRRRROR",e)
     res.status(500).send("Borken")
   }
   
