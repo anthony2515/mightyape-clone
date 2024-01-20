@@ -16,7 +16,8 @@
     "test": "vitest",
     "knex": "knex --knexfile ./server/db/knexfile.js",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "format": "prettier -w '**/*.{js,jsx,ts,tsx}'"
+    "format": "prettier -w '**/*.{js,jsx,ts,tsx}'",
+    "deploy": "knex migrate:latest --env production && knex seed:run --env production"
   },
   "keywords": [
     "fullstack"
