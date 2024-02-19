@@ -6,7 +6,10 @@
   "repository": "https://https://github.com/dev-academy-challenges/my-fullstack-collection-query",
   "main": "server/index.ts",
   "scripts": {
-    "start": "ts-node server/index.ts",
+    "deploy": "npm run migrate && npm run seed && vercel",
+    "migrate": "knex migrate:latest --env production",
+    "seed": "knex seed:run --env production",
+    "start": "node dist/server.js",
     "dev": "run-p dev:client dev:server",
     "dev:client": "vite",
     "dev:server": "tsx watch server/index.ts",
@@ -16,10 +19,7 @@
     "test": "vitest",
     "knex": "knex --knexfile ./server/db/knexfile.js",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "format": "prettier -w '**/*.{js,jsx,ts,tsx}'",
-    "deploy": "npm run migrate && npm run seed",
-  "migrate": "knex migrate:latest --env production",
-  "seed": "knex seed:run --env production"
+    "format": "prettier -w '**/*.{js,jsx,ts,tsx}'"
   },
   "keywords": [
     "fullstack"
@@ -55,6 +55,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.5.1",
     "@types/express": "^4.17.14",
+    "@types/jest": "^29.5.11",
     "@types/multer": "^1.4.10",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",

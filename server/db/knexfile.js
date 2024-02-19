@@ -37,7 +37,7 @@ export default {
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
-      filename: Path.join(__dirname, '/app/storage/prod.sqlite3'),
+      filename: '/var/task/app/storage/prod.sqlite3'
     },
     pool: {
       afterCreate: (conn, cb) => conn.run('PRAGMA foreign_keys = ON', cb),
